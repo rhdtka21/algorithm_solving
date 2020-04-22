@@ -13,6 +13,6 @@ for t in range(1, T+1):
     for i in range(1, N):
         if tasks[i][0] >= end:
             end = tasks[i][1]
-            ans += 10
+            ans += 1
 
     print('#%d %d' % (t, ans))
