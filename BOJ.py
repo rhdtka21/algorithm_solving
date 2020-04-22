@@ -1,116 +1,111 @@
-# [파이썬 | BOJ | 13459, 13460] 구슬 탈출 1, 2
+# [파이썬 | BOJ | 3190] 뱀
 
 import sys
 from collections import deque
 read = sys.stdin.readline
  
-#상 하 좌 우
-d = [[-1, 0], [1, 0], [0, -1], [0, 1]]
+def printBoard():
+    for x in board:
+        print(x)
+    print('-------------------------------')
  
-def move(rr, rc, br, bc, idx):
-    rcount, bcount = 0, 0
- 
-    while True:
-        nrr, nrc = rr + d[idx][0], rc + d[idx][1]
-        if board[nrr][nrc] == '#':
-            break
-        rr, rc = nrr, nrc
-        if board[nrr][nrc] == 'O':
-            break
-        rcount += 1
-        
-    while True:
-        nbr, nbc = br + d[idx][0], bc + d[idx][1]
-        if board[nbr][nbc] == '#':
-            break
-        br, bc = nbr, nbc
-        if board[nbr][nbc] == 'O':
-            break
-        bcount += 1
- 
-    if rr == br and rc == bc:
-        if rr == hole[0] and rc == hole[1]:
-            return rr, rc, br, bc
-        if rcount < bcount:
-            br, bc = br - d[idx][0], bc - d[idx][1]
+def rotate(case, char):
+    if char == 'D':
+        if case < 3:
+            return case + 1
         else:
-            rr, rc = rr - d[idx][0], rc - d[idx][1]
+            return 0
+    else:
+        if case > 0:
+            return case - 1
+        else:
+            return 3
  
-    return rr, rc, br, bc
- 
-def bfs(red, blue, depth):
-    ans = 0
-    q = deque()
-    q.append([red, blue, depth])
-    while q:
-        red, blue, depth = q.popleft()
-        rr, rc = red
-        br, bc = blue
- 
-        #print(red, blue, depth)
-        
-        if depth > 10:
-            break
-        
-        if br == hole[0] and bc == hole[1]:
-            #print("blue hole")
-            ans = -1
-            continue
- 
-        if rr == hole[0] and rc == hole[1]:
-            #print("red hole")
-            if rr == br and rc == bc:
-                #print("red blue hole")
-                ans = -1
-            ans = 1
-            break
- 
- 
-        for i in range(4):
-            nrr, nrc, nbr, nbc = move(rr, rc, br, bc, i)
-            #print(nrr, nrc, nbr, nbc)
-            if not visited[nrr][nrc][nbr][nbc]:
-                visited[nrr][nrc][nbr][nbc] = True
-                q.append([[nrr, nrc], [nbr, nbc], depth+1])
+#방향 : 오른쪽, 아래, 왼쪽, 위쪽 ([r, c])
+direction = deque([[0, 1], [1, 0], [0, -1], [-1, 0]])
     
-    # 구슬 탈출 1
-    if ans == -1 or depth >= 11:
-        print(0)
-    elif ans == 1:
-        print(1)
-    else:
-        print(0)
+N = int(read())
+K = int(read())
+sec = 0
  
-    # 구슬 탈출 2
-    if depth >= 11:
-        print(-1)
-    elif ans == 1:
-        print(depth)
-    else:
-        print(-1)
+apples = []
+snake = deque()
+snake.append([1,1,0])
  
-R, C = map(int, read().split())
-board = []
+for _ in range(K):
+    apples.append(list(map(int, read().split())))
  
-for _ in range(R):
-    board.append(read().replace('\n', ''))
+L = int(read())
+moveSec = []
+moveDir = []
+for _ in range(L):
+    tempSec, tempDir = read().split()
+    moveSec.append(int(tempSec))
+    moveDir.append(tempDir)
  
-blue = [0, 0]
-red = [0, 0]
-hole = [0, 0]
+board = [[0 for _ in range(N+2)] for _ in range(N+2)]
  
-for i in range(R):
-    for j in range(C):
-        if board[i][j] == 'B':
-            blue[0] = i
-            blue[1] = j
-        if board[i][j] == 'R':
-            red[0] = i
-            red[1] = j
-        if board[i][j] == 'O':
-            hole[0] = i
-            hole[1] = j    
+#벽치기
+for i in range(N+2):
+    board[0][i] = -1
+    board[N+1][i] = -1
+    board[i][0] = -1
+    board[i][N+1] = -1
  
-visited = [[[[False] * C for _ in range(R)] for _ in range(C)] for _ in range(R)]
+#사과 놓기
+for apple in apples:
+    r, c = apple
+    board[r][c] = 2
  
-bfs(red, blue, 0)
+#뱀 초기위치
+for i in range(len(snake)):
+    r, c, d = snake[i]
+    board[r][c] = 1
+ 
+#printBoard()
+endPoint = False
+ 
+#print(moveSec, moveDir)
+ 
+for sec in range(0, 11111):
+    #print(sec)
+    prevDir = snake[0][2]
+    for i in range(len(snake)):
+        for j in range(len(moveSec)):
+            if (sec-i) == moveSec[j]:
+                snake[i][2] = rotate(snake[i][2], moveDir[j])
+ 
+        r, c, d = snake[i]
+        dr, dc = direction[d]
+        nr, nc = r+dr, c+dc
+ 
+        if board[nr][nc] == 0:
+            board[r][c] = 0
+            board[nr][nc] = 1
+ 
+            snake[i][0] = nr
+            snake[i][1] = nc
+ 
+        elif board[nr][nc] == -1:
+            endPoint = True
+            break
+ 
+        elif board[nr][nc] == 1 and i == 0:
+            endPoint = True
+            break
+        
+        elif board[nr][nc] == 2:
+            board[nr][nc] = 1
+            d = snake[0][2]
+ 
+            snake[0][2] = prevDir
+            snake.appendleft([nr, nc, d])
+            
+            break
+ 
+    #print('뱀', snake)
+    #printBoard()
+    if endPoint:
+        break
+ 
+print(sec+1)
