@@ -1,65 +1,116 @@
-# [파이썬 | BOJ | 14499] 주사위 굴리기
+# [파이썬 | BOJ | 13459, 13460] 구슬 탈출 1, 2
 
 import sys
+from collections import deque
 read = sys.stdin.readline
  
-class Dice:
-    top = 0
-    bottom = 0
-    north = 0
-    south = 0
-    east = 0
-    west = 0
+#상 하 좌 우
+d = [[-1, 0], [1, 0], [0, -1], [0, 1]]
+ 
+def move(rr, rc, br, bc, idx):
+    rcount, bcount = 0, 0
+ 
+    while True:
+        nrr, nrc = rr + d[idx][0], rc + d[idx][1]
+        if board[nrr][nrc] == '#':
+            break
+        rr, rc = nrr, nrc
+        if board[nrr][nrc] == 'O':
+            break
+        rcount += 1
+        
+    while True:
+        nbr, nbc = br + d[idx][0], bc + d[idx][1]
+        if board[nbr][nbc] == '#':
+            break
+        br, bc = nbr, nbc
+        if board[nbr][nbc] == 'O':
+            break
+        bcount += 1
+ 
+    if rr == br and rc == bc:
+        if rr == hole[0] and rc == hole[1]:
+            return rr, rc, br, bc
+        if rcount < bcount:
+            br, bc = br - d[idx][0], bc - d[idx][1]
+        else:
+            rr, rc = rr - d[idx][0], rc - d[idx][1]
+ 
+    return rr, rc, br, bc
+ 
+def bfs(red, blue, depth):
+    ans = 0
+    q = deque()
+    q.append([red, blue, depth])
+    while q:
+        red, blue, depth = q.popleft()
+        rr, rc = red
+        br, bc = blue
+ 
+        #print(red, blue, depth)
+        
+        if depth > 10:
+            break
+        
+        if br == hole[0] and bc == hole[1]:
+            #print("blue hole")
+            ans = -1
+            continue
+ 
+        if rr == hole[0] and rc == hole[1]:
+            #print("red hole")
+            if rr == br and rc == bc:
+                #print("red blue hole")
+                ans = -1
+            ans = 1
+            break
+ 
+ 
+        for i in range(4):
+            nrr, nrc, nbr, nbc = move(rr, rc, br, bc, i)
+            #print(nrr, nrc, nbr, nbc)
+            if not visited[nrr][nrc][nbr][nbc]:
+                visited[nrr][nrc][nbr][nbc] = True
+                q.append([[nrr, nrc], [nbr, nbc], depth+1])
     
-    def move(self, op):
-        if op == 1:
-            self.top, self.east, self.bottom, self.west 
- = self.west, self.top, self.east, self.bottom
-        elif op == 2:
-            self.top, self.east, self.bottom, self.west 
- = self.east, self.bottom, self.west, self.top
-        elif op == 3:
-            self.top, self.north, self.bottom, self.south 
- = self.south, self.top, self.north, self.bottom
-        elif op == 4:
-            self.top, self.north, self.bottom, self.south 
- = self.north, self.bottom, self.south, self.top
-        print(self.top)
-        
-    def copyfrom(self, val):
-        self.bottom = val
+    # 구슬 탈출 1
+    if ans == -1 or depth >= 11:
+        print(0)
+    elif ans == 1:
+        print(1)
+    else:
+        print(0)
  
-    def copyto(self):
-        return self.bottom
+    # 구슬 탈출 2
+    if depth >= 11:
+        print(-1)
+    elif ans == 1:
+        print(depth)
+    else:
+        print(-1)
  
-    def show(self):
-        print('t = ', self.top)
-        print('b = ', self.bottom)
-        print('n = ', self.north)
-        print('s = ', self.south)
-        print('e = ', self.east)
-        print('w = ', self.west)
-        print('--------------------------')
-        
-drct = [[0, 1],[0, -1],[-1, 0],[1, 0]]
- 
-N, M, x, y, K = map(int, read().split())
+R, C = map(int, read().split())
 board = []
  
-d = Dice()
-for _ in range(N):
-    board.append(list(map(int, read().split())))
-oplist = list(map(int, read().split()))
+for _ in range(R):
+    board.append(read().replace('\n', ''))
  
-for op in oplist:
-    nx, ny = x + drct[op-1][0], y + drct[op-1][1]
-    #범위 안이면
-    if (nx >= 0 and nx < N) and (ny >= 0 and ny < M):
-        x, y = nx, ny
-        d.move(op)
+blue = [0, 0]
+red = [0, 0]
+hole = [0, 0]
  
-        if board[x][y] > 0:
-            d.copyfrom(board[x][y])
-            board[x][y] = 0
-        else:
-            board[x][y] = d.copyto()
+for i in range(R):
+    for j in range(C):
+        if board[i][j] == 'B':
+            blue[0] = i
+            blue[1] = j
+        if board[i][j] == 'R':
+            red[0] = i
+            red[1] = j
+        if board[i][j] == 'O':
+            hole[0] = i
+            hole[1] = j    
+ 
+visited = [[[[False] * C for _ in range(R)] for _ in range(C)] for _ in range(R)]
+ 
+bfs(red, blue, 0)
