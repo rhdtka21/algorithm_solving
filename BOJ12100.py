@@ -6,7 +6,6 @@ read = sys.stdin.readline
 
 bins = [2**i for i in range(20)]
 
-
 NOTATION = '0123456789ABCDEF'
 
 def numeral_system(number, base):
@@ -126,7 +125,6 @@ def move(direction, doCheck):
         else:
             sync(2)
         
-
 N = int(read())
 baseRow = []
 baseColumn = []
@@ -138,9 +136,6 @@ for i in range(N):
         temp.append(baseRow[j][i])
     baseColumn.append(temp)
 
-row = deepcopy(baseRow)
-column = deepcopy(baseColumn)
-
 ans = -1
 for i in range(1024):
     row = deepcopy(baseRow)
@@ -150,6 +145,7 @@ for i in range(1024):
     if len(num) < 5:
         num = '0' * (5-len(num)) + num
     #print(num)
+
     for n in num:
         move(int(n), True)
     temp = maxval()
