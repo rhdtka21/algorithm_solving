@@ -1,4 +1,4 @@
-# [파이썬 | BOJ | 14890] 경사로
+# [파이썬 | BOJ | 15684] 사다리 조작
 import sys
 read = sys.stdin.readline
 minans = 4
