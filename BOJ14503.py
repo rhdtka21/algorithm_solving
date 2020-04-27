@@ -1,4 +1,4 @@
-# [ÆÄÀÌ½ã | BOJ | 14503] ·Îº¿ Ã»¼Ò±â
+# [íŒŒì´ì¬ | BOJ | 14503] ë¡œë´‡ ì²­ì†Œê¸°
 
 import sys
 read = sys.stdin.readline
@@ -40,13 +40,13 @@ while True:
     if cnt < 4:
         r, c = nr, nc
     else:
-        #´Ù½Ã ¿ø·¡ ¹æÇâÀ¸·Î ¸ÂÃçÁÜ(ÃÊ±â¿¡ µé¾î¿Ô´ø ¹æÇâ)
+        #ë‹¤ì‹œ ì›ë˜ ë°©í–¥ìœ¼ë¡œ ë§ì¶°ì¤Œ(ì´ˆê¸°ì— ë“¤ì–´ì™”ë˜ ë°©í–¥)
         d = unrotate(d)
         nr, nc = r - direction[d][0], c - direction[d][1]
-        #ÈÄÁøÀÌ ¾ÈµÇ´Â°æ¿ì
+        #í›„ì§„ì´ ì•ˆë˜ëŠ”ê²½ìš°
         if board[nr][nc] == 1:
             break
-        #ÈÄÁø ÇÏ´Â°æ¿ì
+        #í›„ì§„ í•˜ëŠ”ê²½ìš°
         else:
             r, c = nr, nc
 ans = 0
@@ -54,4 +54,4 @@ for b in board:
     ans += b.count(2)
     #print(b)
 
-print(ans) 
+print(ans)  
