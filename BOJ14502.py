@@ -1,4 +1,4 @@
-# [ÆÄÀÌ½ã | BOJ | 14502] ¿¬±¸¼Ò
+# [íŒŒì´ì¬ | BOJ | 14502] ì—°êµ¬ì†Œ
 
 import sys
 from queue import deque
@@ -11,26 +11,26 @@ def cpyLab(a):
     for i in a:
         b.append(i)
  
-    ÀßÀº ¸ð¸£°ÚÁö¸¸ ÆÄÀÌ½ã ÀÚ·á±¸Á¶»óÀÇ ÀÌÀ¯·Î º¹»ç°¡ µÇÁö¾Ê°í, Æ÷ÀÎÅÍ°¡ º¹»çµÇ´ÂµíÇÏ´Ù. 
-    Áï b¿Í a°¡ µ¿ÀÏÇÑ ÁÖ¼ÒÀÇ ÀÌÂ÷¿ø ¹è¿­À» °¡¸®Å°°Ô µÇ¾î¼­ cpyÀÇ ¸ñÀû¿¡ ¸ÂÁö ¾Ê°ÔµÈ´Ù.  
+    ìž˜ì€ ëª¨ë¥´ê² ì§€ë§Œ íŒŒì´ì¬ ìžë£Œêµ¬ì¡°ìƒì˜ ì´ìœ ë¡œ ë³µì‚¬ê°€ ë˜ì§€ì•Šê³ , í¬ì¸í„°ê°€ ë³µì‚¬ë˜ëŠ”ë“¯í•˜ë‹¤. 
+    ì¦‰ bì™€ aê°€ ë™ì¼í•œ ì£¼ì†Œì˜ ì´ì°¨ì› ë°°ì—´ì„ ê°€ë¦¬í‚¤ê²Œ ë˜ì–´ì„œ cpyì˜ ëª©ì ì— ë§žì§€ ì•Šê²Œëœë‹¤.  
     '''
- 
+
     b = [[0 for _ in range(M)] for _ in range(N)]
     for i in range(N):
         for j in range(M):
             b[i][j] = a[i][j]
     return b
- 
+
 def coronaVirus(originLab):
     global maxAns
- 
+
     tempLab = cpyLab(originLab)
     q = deque()
     for i in range(N):
         for j in range(M):
             if tempLab[i][j] == 2:
                 q.append([i,j])
- 
+
     while q:
         nowI, nowJ = map(int, q.popleft())
         for i in range(4):
@@ -45,7 +45,7 @@ def coronaVirus(originLab):
     if ans > maxAns:
         maxAns = ans
     return
- 
+
 def Wall(cnt):
     if cnt == 3:
         coronaVirus(originLab)
@@ -57,12 +57,12 @@ def Wall(cnt):
                     originLab[i][j] = 1
                     Wall(cnt+1)
                     originLab[i][j] = 0
- 
+
 N, M = map(int, read().split())
 originLab = []
- 
+
 for _ in range(N):
     originLab.append(list(map(int, read().split())))
- 
+
 Wall(0)
-print(maxAns)
+print(maxAns) 
