@@ -1,14 +1,14 @@
-# [ÆÄÀÌ½ã | BOJ | 3190] ¹ì
+# [íŒŒì´ì¬ | BOJ | 3190] ë±€
 
 import sys
 from collections import deque
 read = sys.stdin.readline
- 
+
 def printBoard():
     for x in board:
         print(x)
     print('-------------------------------')
- 
+
 def rotate(case, char):
     if char == 'D':
         if case < 3:
@@ -20,21 +20,21 @@ def rotate(case, char):
             return case - 1
         else:
             return 3
- 
-#¹æÇâ : ¿À¸¥ÂÊ, ¾Æ·¡, ¿ŞÂÊ, À§ÂÊ ([r, c])
+
+#ë°©í–¥ : ì˜¤ë¥¸ìª½, ì•„ë˜, ì™¼ìª½, ìœ„ìª½ ([r, c])
 direction = deque([[0, 1], [1, 0], [0, -1], [-1, 0]])
-    
+
 N = int(read())
 K = int(read())
 sec = 0
- 
+
 apples = []
 snake = deque()
 snake.append([1,1,0])
- 
+
 for _ in range(K):
     apples.append(list(map(int, read().split())))
- 
+
 L = int(read())
 moveSec = []
 moveDir = []
@@ -42,31 +42,31 @@ for _ in range(L):
     tempSec, tempDir = read().split()
     moveSec.append(int(tempSec))
     moveDir.append(tempDir)
- 
+
 board = [[0 for _ in range(N+2)] for _ in range(N+2)]
- 
-#º®Ä¡±â
+
+#ë²½ì¹˜ê¸°
 for i in range(N+2):
     board[0][i] = -1
     board[N+1][i] = -1
     board[i][0] = -1
     board[i][N+1] = -1
- 
-#»ç°ú ³õ±â
+
+#ì‚¬ê³¼ ë†“ê¸°
 for apple in apples:
     r, c = apple
     board[r][c] = 2
- 
-#¹ì ÃÊ±âÀ§Ä¡
+
+#ë±€ ì´ˆê¸°ìœ„ì¹˜
 for i in range(len(snake)):
     r, c, d = snake[i]
     board[r][c] = 1
- 
+
 #printBoard()
 endPoint = False
- 
+
 #print(moveSec, moveDir)
- 
+
 for sec in range(0, 11111):
     #print(sec)
     prevDir = snake[0][2]
@@ -74,38 +74,38 @@ for sec in range(0, 11111):
         for j in range(len(moveSec)):
             if (sec-i) == moveSec[j]:
                 snake[i][2] = rotate(snake[i][2], moveDir[j])
- 
+
         r, c, d = snake[i]
         dr, dc = direction[d]
         nr, nc = r+dr, c+dc
- 
+
         if board[nr][nc] == 0:
             board[r][c] = 0
             board[nr][nc] = 1
- 
+
             snake[i][0] = nr
             snake[i][1] = nc
- 
+
         elif board[nr][nc] == -1:
             endPoint = True
             break
- 
+
         elif board[nr][nc] == 1 and i == 0:
             endPoint = True
             break
-        
+
         elif board[nr][nc] == 2:
             board[nr][nc] = 1
             d = snake[0][2]
- 
+
             snake[0][2] = prevDir
             snake.appendleft([nr, nc, d])
-            
+
             break
- 
-    #print('¹ì', snake)
+
+    #print('ë±€', snake)
     #printBoard()
     if endPoint:
         break
- 
-print(sec+1)
+
+print(sec+1) 
