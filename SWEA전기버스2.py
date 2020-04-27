@@ -25,11 +25,9 @@ def solve(num, charge, cnt):
         solve(num+1, charge-1, cnt)
 
 T = int(input())
-
 for t in range(1, T+1):
     ans = 999999
     battery = list(map(int, input().split()))
     N = battery[0]
     solve(2, battery[1]-1, 0)
     print("#%d %d" %(t, ans))
-    
