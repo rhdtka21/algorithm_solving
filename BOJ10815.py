@@ -1,4 +1,4 @@
-# [ÆÄÀÌ½ã | BOJ | 10815] ¼ıÀÚ Ä«µå
+# [íŒŒì´ì¬ | BOJ | 10815] ìˆ«ì ì¹´ë“œ
 
 import sys
 read = sys.stdin.readline
