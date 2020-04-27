@@ -29,5 +29,4 @@ for t in range(1, T+1):
         ans = check()
         if ans > 0:
             break
-
     print('#%d %d' %(t, ans))
