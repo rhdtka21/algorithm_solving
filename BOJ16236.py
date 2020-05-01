@@ -4,7 +4,6 @@ from collections import deque
 read = sys.stdin.readline
 
 sec = 0
-
 #상 하 좌 우
 d = [[-1, 0], [1, 0], [0, -1], [0, 1]]
 
@@ -59,13 +58,10 @@ def hunt(sharkSize, sharkExp):
     board[nextX][nextY] = -1 * sharkSize
 
     #myprint(board)
-
     #상어 위치 정보 갱신
     sharkX, sharkY = nextX, nextY
 
     return sharkSize, sharkExp
-    
-
 
 N = int(read())
 board = [list(map(int, read().split())) for _ in range(N)]
@@ -92,7 +88,3 @@ while True:
     if sharkSize == -1 and sharkExp == -1:
         print(sec)
         break
-    
-
-
-
