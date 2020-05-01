@@ -84,10 +84,3 @@ for r in range(N):
     for c in range(N):
         ans += len(board[r][c])
 print(ans)
-
-
-            
-                
-            
-                
-            
