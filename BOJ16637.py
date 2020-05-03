@@ -16,7 +16,6 @@ def myCal(num1, op, num2):
     elif op == '!':
         return num1
 
-
 def case(check, depth):
     if depth == opNum:
         solve(check)
@@ -54,9 +53,9 @@ def solve(check):
         maxAns = ans
     return
 
-
 N = int(read())
 calstr = read().replace('\n', '')
+
 originNums = []
 originOps = []
 for i in range(N):
