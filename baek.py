@@ -5,7 +5,7 @@ GAN = "0123456789"
 JI = "ABCDEFGHIJKL"
 
 def gabja(N):
-    year = abs(N - 4) % 60
+    year = abs(N + 56) % 60
     i = year
     gan = i % 10
     ji = i % 12
