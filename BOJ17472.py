@@ -56,7 +56,6 @@ def buildBridge(country):
                 else:
                     cnt0 = 0
     
-    
             cnt0 = 0
             dest = 0
             #우 탐색
@@ -103,7 +102,6 @@ def buildBridge(country):
                 else:
                     cnt0 = 0
     
-    
     return bridgeLens
 
 def exitOption(country):
@@ -148,7 +146,6 @@ def solve(country, ans):
     #그 외에도 다리를 건설 안하는 옵션
     solve(country+1, ans)
 
-
 def graphUpdate(buildTF, country1, country2):
     if buildTF:
         edges[country1].append(country2)
@@ -156,9 +153,7 @@ def graphUpdate(buildTF, country1, country2):
     else:
         edges[country1].remove(country2)
         edges[country2].remove(country1)
-
-
-
+        
 R, C = map(int, read().split())
 cell = [list(map(int, read().split())) for _ in range(R)]
 visited = [[0 for _ in range(C) ] for _ in range(R)]
