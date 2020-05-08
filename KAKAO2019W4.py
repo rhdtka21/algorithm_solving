@@ -21,7 +21,11 @@ def solution(k, room_number):
         answer.append(findAvailRoom(each_room))
     #print(answer)
     return answer
-    
+
+# 테스트용 input output 정의
+
+# 10
+# 1 3 4 1 3 1  
 k = int(input())
 room_number = list(map(int, input().split()))
 solution(k, room_number)
