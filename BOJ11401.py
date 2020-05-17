@@ -4,15 +4,12 @@ import sys
 read = sys.stdin.readline
 
 def power(a, b):
-    ret = 1
-    while b>0:
-        if b % 2:       # b가 홀수이면
-            ret *= a
-            ret %= p
-        a *= a
-        a %= p
-        b //= 2;
-    return ret
+    if b == 0:
+        return 1
+    if b % 2:   #홀수이면
+        return (power(a, b//2) ** 2 * a) % p
+    else:
+        return (power(a, b//2) ** 2) % p
 
 p = 1000000007
 N, K = map(int, read().split())
