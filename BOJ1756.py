@@ -21,5 +21,4 @@ for i in reversed(range(D)):
     if oven[i] >= pizza[pizzaIdx]:
         pizzaIdx += 1
         depth = i
-
 print(0)
