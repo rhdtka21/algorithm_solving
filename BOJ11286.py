@@ -1,4 +1,4 @@
-# [파이썬 | BOJ | 9506] 약수들의 합
+# [파이썬 | BOJ | 11286] 절댓값 힙
 import sys
 import heapq
 read = sys.stdin.readline
@@ -9,7 +9,7 @@ N = int(read())
 op = []
 for _ in range(N):
     op.append(int(read()))
-    
+
 for o in op:
     if o == 0:
         if len(heap) > 0:
