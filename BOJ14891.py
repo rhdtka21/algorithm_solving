@@ -16,7 +16,6 @@ group = [[[0], [1], [2], [3]],
     [[0, 1, 2, 3]]
 ]
  
-
 for _ in range(4):
   gearString = read().rstrip('\n')
   gearDeque = deque()
